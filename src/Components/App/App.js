@@ -7,8 +7,10 @@ import React from 'react';
 class App extends React.Component {
   constructor(props) {
     super(props);
+
     this.addTrack = this.addTrack.bind(this);
     this.removetrack = this.removetrack.bind(this);
+    this.updatePlaylistName = this.updatePlaylistName.bind(this);
 
     this.state = {
       searchResults: [
@@ -19,7 +21,7 @@ class App extends React.Component {
           id: 2
         }
       ],
-      playlistName: 'New Playlist',
+      playlistName: '',
       playlistTracks: [
         {
         name: 'Test 1',
@@ -48,6 +50,12 @@ class App extends React.Component {
     })
   }
 
+  updatePlaylistName(name) {
+    this.setState({
+      playlistName: name
+    });
+  }
+
   render() {
     return (
       <div>
@@ -63,6 +71,7 @@ class App extends React.Component {
               playlistName={this.state.playlistName}
               playlistTracks={this.state.playlistTracks}
               onRemove={this.removetrack}
+              onNameChange={this.updatePlaylistName}
             />
           </div>
         </div>
