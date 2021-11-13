@@ -3,7 +3,6 @@ import { SearchBar } from '../SearchBar/SearchBar';
 import { SearchResults } from '../SearchResults/SearchResults';
 import { Playlist } from '../Playlist/Playlist';
 import React from 'react';
-import { Track } from '../Track/Track';
 
 class App extends React.Component {
   constructor(props) {
@@ -16,7 +15,7 @@ class App extends React.Component {
         name: 'Cough Syrup',
         artist: 'Young the Giant',
         album: 'Young the Giant',
-        id: '1'
+        id: 1
       }]
     }
   }
