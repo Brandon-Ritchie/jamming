@@ -8,15 +8,26 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.addTrack = this.addTrack.bind(this);
+    this.removetrack = this.removetrack.bind(this);
+
     this.state = {
-      searchResults: [],
+      searchResults: [
+        {
+          name: 'Test 2',
+          artist: 'Test 2',
+          album: 'Test 2',
+          id: 2
+        }
+      ],
       playlistName: 'New Playlist',
-      playlistTracks: [{
-        name: 'Cough Syrup',
-        artist: 'Young the Giant',
-        album: 'Young the Giant',
+      playlistTracks: [
+        {
+        name: 'Test 1',
+        artist: 'Test 1',
+        album: 'Test 1',
         id: 1
-      }]
+        }
+      ]
     }
   }
 
@@ -28,6 +39,13 @@ class App extends React.Component {
         playlistTracks: [...prevState.playlistTracks, track]
       }));
     }
+  }
+
+  removetrack(track) {
+    const newArray = this.state.playlistTracks.filter(playlistTrack => playlistTrack !== track);
+    this.setState({
+      playlistTracks: newArray
+    })
   }
 
   render() {
@@ -44,6 +62,7 @@ class App extends React.Component {
             <Playlist 
               playlistName={this.state.playlistName}
               playlistTracks={this.state.playlistTracks}
+              onRemove={this.removetrack}
             />
           </div>
         </div>
