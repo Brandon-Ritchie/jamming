@@ -18,6 +18,8 @@ export const Spotify = {
     const accessTokenMatch = window.location.href.match(/access_token=([^&]*)/);
     const expiresInMatch = window.location.href.match(/expires_in=([^&]*)/);
 
+    // If access token and expires in are in URL
+
     if (accessTokenMatch && expiresInMatch) {
 
       accessToken = accessTokenMatch[1];
@@ -29,6 +31,8 @@ export const Spotify = {
 
     } else {
       
+      // Send user to Spotify Access URL if access token is not already in URL
+
       const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientID}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectURI}`;
       window.location = accessUrl;
 
@@ -39,6 +43,8 @@ export const Spotify = {
     
     accessToken = Spotify.getAccessToken();
 
+    // Sends term to Spotify API
+
     const response = await fetch(
       `https://api.spotify.com/v1/search?type=track&q=${term}`,
       {
@@ -46,10 +52,14 @@ export const Spotify = {
       });
       const jsonResponse = await response.json();
 
+      // If no tracks, return empty array
+
       if (!jsonResponse.tracks) {
       return [];
       }
     
+      // Map found tracks to search results
+
       return jsonResponse.tracks.items.map(track => ({
         id: track.id,
         name: track.name,
@@ -61,6 +71,8 @@ export const Spotify = {
 
   async savePlaylist(playlistName, trackURIs) {
 
+    // If playlist name or no tracks, ignore button press
+
     if(!playlistName || !trackURIs) {
       return;
     }
@@ -70,6 +82,8 @@ export const Spotify = {
       Authorization: `Bearer ${accessToken}`
     };
 
+    // Create playlist and return playlist id
+
     const response = await fetch(
       `https://api.spotify.com/v1/me/playlists`, {
       headers: headers,
@@ -78,6 +92,9 @@ export const Spotify = {
     });
     const jsonResponse = await response.json();
     const playlistId = jsonResponse.id;
+
+    // Add tracks to playlist
+
     return await fetch(
       `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
       {
@@ -86,5 +103,6 @@ export const Spotify = {
         body: JSON.stringify({ uris: trackURIs })
       }
     );
+
   }
 };
