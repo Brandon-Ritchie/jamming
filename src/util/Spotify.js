@@ -60,7 +60,6 @@ export const Spotify = {
   },
 
   async savePlaylist(playlistName, trackURIs) {
-    console.log('I am now in the Spotify Module');
 
     if(!playlistName || !trackURIs) {
       return;
